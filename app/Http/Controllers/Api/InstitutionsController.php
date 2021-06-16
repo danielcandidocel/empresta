@@ -3,18 +3,29 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Simulator\SimulatorServiceContract;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class InstitutionsController extends Controller
 {
     /**
+     * @var SimulatorServiceContract
+     */
+    private SimulatorServiceContract $service;
+
+    public function __construct(SimulatorServiceContract $service)
+    {
+        $this->service = $service;
+    }
+    /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return JsonResponse
      */
     public function index()
     {
-
+        return response()->json($this->service->institutions->toArray());
     }
 
     /**

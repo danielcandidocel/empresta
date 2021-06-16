@@ -3,10 +3,20 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Simulator\SimulatorService;
+use App\Simulator\SimulatorServiceContract;
 use Illuminate\Http\Request;
 
 class CovenantsController extends Controller
 {
+
+    private SimulatorServiceContract $service;
+
+    public function __construct(SimulatorServiceContract $service)
+    {
+        $this->service = $service;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +24,7 @@ class CovenantsController extends Controller
      */
     public function index()
     {
-        //
+        return response()->json($this->service->covenants->toArray());
     }
 
     /**
