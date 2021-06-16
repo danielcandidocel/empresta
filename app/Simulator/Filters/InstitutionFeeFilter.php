@@ -8,8 +8,17 @@ use Iterator;
 
 class InstitutionFeeFilter extends FilterIterator
 {
+    /**
+     * @var array|null
+     */
     private ?array $instituicoes;
+    /**
+     * @var array|null
+     */
     private ?array $convenios;
+    /**
+     * @var int|null
+     */
     private ?int $parcela;
 
     /**
@@ -24,16 +33,8 @@ class InstitutionFeeFilter extends FilterIterator
         parent::__construct($iterator);
 
         $this->instituicoes = $instituicoes;
-        $this->convenios = $convenios;
-        $this->parcela = $parcela;
-    }
-
-    /**
-     * @return InstitutionFee
-     */
-    public function current(): InstitutionFee
-    {
-        return parent::current();
+        $this->convenios    = $convenios;
+        $this->parcela      = $parcela;
     }
 
     /**
@@ -47,7 +48,7 @@ class InstitutionFeeFilter extends FilterIterator
             return false;
         }
 
-        if(!is_null($this->convenios) && !in_array($fee->convenio, $this->convenios)) {
+        if (!is_null($this->convenios) && !in_array($fee->convenio, $this->convenios)) {
             return false;
         }
 
@@ -56,5 +57,13 @@ class InstitutionFeeFilter extends FilterIterator
         }
 
         return true;
+    }
+
+    /**
+     * @return InstitutionFee
+     */
+    public function current(): InstitutionFee
+    {
+        return parent::current();
     }
 }

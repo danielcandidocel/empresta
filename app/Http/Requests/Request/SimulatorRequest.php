@@ -30,7 +30,7 @@ class SimulatorRequest extends FormRequest
             'valor_emprestimo.regex'    => 'O valor do empréstimo é deve conter um valor decimal',
             'instituicoes.array'        => 'O campo instituições deve ser do tipo Array',
             'convenios.array'           => 'O campo instituições deve ser do tipo Array',
-            'parcela.integer'           => 'O campo parcela deve ter um valor numérico'
+            'parcela.integer'           => 'O campo parcela deve ter um valor numérico',
         ];
     }
 }

@@ -9,6 +9,9 @@ use Illuminate\Http\JsonResponse;
 
 class SimulatorController extends Controller
 {
+    /**
+     * @var SimulatorServiceContract
+     */
     private SimulatorServiceContract $service;
 
     /**

@@ -10,7 +10,6 @@ class Covenant extends DataTransferObject
      * @var string
      */
     public string $chave;
-
     /**
      * @var string
      */

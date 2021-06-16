@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Simulator;
-
 
 use App\Values\CovenantCollection;
 use App\Values\InstitutionCollection;

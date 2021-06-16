@@ -8,13 +8,15 @@ use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
+    /**
+     * @var array|string[]
+     */
     public array $singletons = [
-        SimulatorServiceContract::class => SimulatorService::class
+        SimulatorServiceContract::class => SimulatorService::class,
     ];
 
     /**
      * Register any application services.
-     *
      * @return void
      */
     public function register()
@@ -24,7 +26,6 @@ class AppServiceProvider extends ServiceProvider
 
     /**
      * Bootstrap any application services.
-     *
      * @return void
      */
     public function boot()

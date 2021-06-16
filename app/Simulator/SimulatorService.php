@@ -8,8 +8,17 @@ use App\Values\InstitutionFeeCollection;
 
 class SimulatorService implements SimulatorServiceContract
 {
+    /**
+     * @var CovenantCollection
+     */
     public CovenantCollection $covenants;
+    /**
+     * @var InstitutionCollection
+     */
     public InstitutionCollection $institutions;
+    /**
+     * @var InstitutionFeeCollection
+     */
     public InstitutionFeeCollection $institutionsFee;
 
     /**
@@ -17,9 +26,20 @@ class SimulatorService implements SimulatorServiceContract
      */
     public function __construct()
     {
-        $this->covenants        = CovenantCollection::create($this->loadData('app/convenios.json'));
-        $this->institutions     = InstitutionCollection::create($this->loadData('app/instituicoes.json'));
-        $this->institutionsFee  = InstitutionFeeCollection::create($this->loadData('app/taxas_instituicoes.json'));
+        $this->covenants       = CovenantCollection::create($this->loadData('app/convenios.json'));
+        $this->institutions    = InstitutionCollection::create($this->loadData('app/instituicoes.json'));
+        $this->institutionsFee = InstitutionFeeCollection::create($this->loadData('app/taxas_instituicoes.json'));
+    }
+
+    /**
+     * @param string $path
+     * @return mixed
+     */
+    protected function loadData(string $path)
+    {
+        $data = file_get_contents(storage_path($path));
+
+        return json_decode($data, true);
     }
 
     /**
@@ -33,25 +53,15 @@ class SimulatorService implements SimulatorServiceContract
     {
         $simulations = [];
 
-        foreach($this->institutionsFee->filter($instituicoes, $convenios, $parcela) as $fee) {
+        foreach ($this->institutionsFee->filter($instituicoes, $convenios, $parcela) as $fee) {
             $simulations[$fee->instituicao][] = [
                 'taxa'          => $fee->taxaJuros,
                 'parcelas'      => $fee->parcelas,
                 'valor_parcela' => round($amount * $fee->coeficiente, 2),
-                'convenio'      => $fee->convenio
+                'convenio'      => $fee->convenio,
             ];
         }
 
         return $simulations;
-    }
-
-    /**
-     * @param string $path
-     * @return mixed
-     */
-    protected function loadData(string $path)
-    {
-        $data = file_get_contents(storage_path($path));
-        return json_decode($data, true);
     }
 }
