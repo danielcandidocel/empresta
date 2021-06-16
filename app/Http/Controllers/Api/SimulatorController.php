@@ -5,26 +5,30 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Request\SimulatorRequest;
 use App\Simulator\SimulatorServiceContract;
-use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
 
 class SimulatorController extends Controller
 {
     private SimulatorServiceContract $service;
 
+    /**
+     * SimulatorController constructor.
+     * @param SimulatorServiceContract $service
+     */
     public function __construct(SimulatorServiceContract $service)
     {
         $this->service = $service;
     }
+
     /**
      * Handle the incoming request.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param SimulatorRequest $request
+     * @return JsonResponse
      */
-    public function __invoke(SimulatorRequest $request)
+    public function __invoke(SimulatorRequest $request): JsonResponse
     {
-//        $this->service->institutionsFee->
-        return $request;
-        return response()->json($this->service->institutionsFee->toArray());
+        $simulations = $this->service->simulate($request->valor_emprestimo, $request->instituicoes, $request->convenios, $request->parcela);
+
+        return response()->json($simulations);
     }
 }

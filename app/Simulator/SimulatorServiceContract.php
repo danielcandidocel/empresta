@@ -17,5 +17,5 @@ use App\Values\InstitutionFeeCollection;
  */
 interface SimulatorServiceContract
 {
-
+    public function simulate(float $amount, ?array $instituicoes, ?array $convenios, ?int $parcelas): array;
 }
